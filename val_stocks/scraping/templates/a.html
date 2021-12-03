@@ -1,0 +1,13 @@
+<!-- html 코드. django에서 동작 -->
+
+<div class="p-4 mb-3 bg-light rounded">
+    <h4 class="font-bold"><b>주요 거래 top5</b></h4>
+
+    <!-- django 템플릿 태그. 위에서 받은 comps정보를 index에 삽입 -->
+    {%for index in comps %}
+    <td>
+        <p style="font-size:15px;"><b>{{index.comp}}</b></p>
+    </td>
+    {%endfor%}
+
+</div>
