@@ -7,5 +7,6 @@ urlpatterns = [
       path( "ok", views.start ),
       path( "index", views.index ),
       path( "news", views.news ),
+      path( "pop", views.popular ),
 
       ]

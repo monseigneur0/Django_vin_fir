@@ -3,39 +3,44 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from .models import Company
+from pykrx import stock
+from .models import Company, Quarter #data
 
-# naver finance 인기 검색 종목
-urls = 'https://finance.naver.com/'
-headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"}
-res = requests.get(urls,headers=headers)
-soups = BeautifulSoup(res.text,'html.parser')
 
-top = soups.select("#container > div.aside > div.group_aside > div.aside_area.aside_popular > table > tbody > tr > th")
+def popular(req) :
+    # naver finance 인기 검색 종목
+    urls = 'https://finance.naver.com/'
+    headers = {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"}
+    res = requests.get(urls,headers=headers)
+    soups = BeautifulSoup(res.text,'html.parser')
 
-toplist = list()
-top2 = list()
+    top = soups.select("#container > div.aside > div.group_aside > div.aside_area.aside_popular > table > tbody > tr > th")
 
-for tops in top:
-    toplist.append(tops.text.strip())
+    toplist = list()
+    top2 = list()
 
-for i in range(len(toplist)):
-    comp = top[i].text.strip()
+    for tops in top:
+        toplist.append(tops.text.strip())
 
-    item_objs={
-        'comp':comp,
-    }
-    top2.append(item_objs)
+    for i in range(len(toplist)):
+        comp = top[i].text.strip()
 
-comps = top2
-# print(comps)
-# Create your views here.
+        item_objs={
+            'comp':comp,
+        }
+        top2.append(item_objs)
+
+    comps = top2
+    print(comps)
+    # Create your views here.
+    return render(req, 'b.html')
 def start(req) :
     df = stock.get_market_ohlcv("20150720", "20150810", "005930")
     print(df.head(3))
     df1 = stock.get_market_fundamental("20210104", "20210108", "005930")
     print(df1.head(2))
     context = { 'lists_com' : df1 }
-    samsung = stock.get_market_ticker_name(ticker)
+    samsung = stock.get_market_ticker_name("005930")
     print(samsung)
 
     return render(req, 'a.html', context)
@@ -94,3 +99,16 @@ def news(req):
     print(newslist)
     context = {'newsall' : newslist }
     return render(req, 'news.html', context )
+
+def kospi_list(req):
+    tickers = stock.get_market_ticker_list()
+    ['095570', '006840', '027410', '282330', '138930', ...]
+
+    tickers = stock.get_market_ticker_list("20190225", market="KOSDAQ")
+    ['095570', '006840', '027410', '282330', '138930', ...]
+
+    for ticker in stock.get_market_ticker_list("20211208", market="KOSDAQ"):
+        new_company = Company( ticker = ticker, company_name = stock.get_market_ticker_name(ticker), market = "d",  )
+
+
+        new_company.save()
