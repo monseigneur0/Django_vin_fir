@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+
+    <title>tribe</title>
+</head>
+<body>
+
+    <div class="row">
+        {% for wine in wines %}
+        {% if wine %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <a href="http://15.165.77.159:8000/charts/tribe/"><img class="card-img-top"  alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">{{ wine.category_name }}</a>
+                    </h4>
+                    <h5>${{ wine.category_name }} </h5>
+                    <p class="card-text">{{ wine.category_ticker }} </p>
+                </div>
+                <div class="card-footer container">
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex flex-row-reverse">
+                                <input type="hidden" name="buywine" value="wine.wine_photo">
+                                <button class="btn btn-danger btn-sm">구매</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+</body>
+</html>

@@ -8,5 +8,9 @@ urlpatterns = [
       path( "index", views.index ),
       path( "news", views.news ),
       path( "pop", views.popular ),
+      path( "update", views.kospi_list ),
+      path( "trib", views.tribeofstocks ),
+      path( "com", views.com ),
+      path( "tribe", views.tribe ),
 
       ]

@@ -2,10 +2,11 @@ from django.shortcuts import render
 from bs4 import BeautifulSoup
 import requests
 import json
-from .models import Company
+from .models import Company, Category, Quarter
 from pykrx import stock
 from .models import Company, Quarter #data
-
+import pandas as pd
+import time
 
 def popular(req) :
     # naver finance 인기 검색 종목
@@ -42,7 +43,14 @@ def start(req) :
     context = { 'lists_com' : df1 }
     samsung = stock.get_market_ticker_name("005930")
     print(samsung)
-
+    print(type(samsung))
+    df2 = stock.get_market_cap("20211208", "20211208", "005930")
+    df3 = pd.DataFrame(df2)
+    df4 = df3["시가총액"].tolist()
+    print(df4)
+    print(df4[0])
+    print(type(df4))
+    print(type(df4[0]))
     return render(req, 'a.html', context)
 
 def index(request):
@@ -101,14 +109,96 @@ def news(req):
     return render(req, 'news.html', context )
 
 def kospi_list(req):
-    tickers = stock.get_market_ticker_list()
-    ['095570', '006840', '027410', '282330', '138930', ...]
+#     tickers = stock.get_market_ticker_list()
+#     ['095570', '006840', '027410', '282330', '138930', ...]
+#
+#     tickers = stock.get_market_ticker_list("20190225", market="KOSDAQ")
+#     ['095570', '006840', '027410', '282330', '138930', ...]
+#     aa1= stock.get_market_ticker_list("20211208", market="KOSDAQ")
+#     print(len(aa1),aa1)
+#     time.sleep(1)
+# 코스닥
+#     tickers1 = stock.get_market_ticker_list("20211208", market="KOSDAQ")
+#     for ticker in tickers1:
+#         time.sleep(0.3)
+#         df2 = stock.get_market_cap("20211208", "20211208", ticker)
+#         time.sleep(0.3)
+#         df3 = pd.DataFrame(df2)
+#         df4 = df3["시가총액"].tolist()
+#         name2 = stock.get_market_ticker_name(ticker)
+#         time.sleep(0.3)
+#         new_company = Company( ticker = ticker, company_name = name2, market = "d", stock_price = df4[0]  )
+#         print(new_company)
+#         new_company.save()
 
-    tickers = stock.get_market_ticker_list("20190225", market="KOSDAQ")
-    ['095570', '006840', '027410', '282330', '138930', ...]
+#     company1 = Company.objects.all()
+#     company1.delete()
+#     company2 = Category.objects.all()
+#     company2.delete()
 
-    for ticker in stock.get_market_ticker_list("20211208", market="KOSDAQ"):
-        new_company = Company( ticker = ticker, company_name = stock.get_market_ticker_name(ticker), market = "d",  )
+# 코스피
+#     a3a1 = stock.get_market_ticker_list("20211208", market="KOSPI")
+#     for ticker in a3a1:
+#         time.sleep(0.05)
+#         df2 = stock.get_market_cap("20211208", "20211208", ticker)
+#         time.sleep(0.05)
+#         df3 = pd.DataFrame(df2)
+#         df4 = df3["시가총액"].tolist()
+#         new_company = Company( ticker = ticker, company_name = stock.get_market_ticker_name(ticker), market = "p", stock_price = df4[0]  )
+#         print(new_company)
+#         time.sleep(0.05)
+#         new_company.save()
+
+# 키ㅏ테고리
+#     for ef1 in range(4):
+#         ak = 1024 + ef1
+
+#     for ef1 in range(23):
+#         ak = 1005 + ef1
+#         print(ak)
+#         pdf = stock.get_index_portfolio_deposit_file(str(ak))
+#         time.sleep(2)
+#         print(pdf)
+#         fje1 = stock.get_index_ticker_name(str(ak))
+#         time.sleep(2)
+#         print(fje1)
+#         new_company3 = Category( ticker2 = pdf, category_name = fje1, category_ticker =str(ak))
+#         time.sleep(2)
+#
+#         print(new_company3)
+#         new_company3.save()
+
+    return render(req, 'news.html' )
+
+def tribeofstocks(req):
+
+    return render(req, 'b.html')
+
+def tribe(req):
+    alotofwine= Category.objects.all()
+    context = {'wines' : alotofwine }
+    # Django 템플릿에 사용할 파라미터 값을 변수로 선언 > 사용해야할 인자값이 많아질 때 편리하다.
+    # board = get_object_or_404(Board, id=pk)
+    # Board는 필자가 Model에서 설정한 DB 이름
+    context['wine'] = alotofwine
+    return render(req, 'tribe.html')
 
 
-        new_company.save()
+
+def com(req):
+    comp = Company.objects.all()
+    page = req.GET.get('page', '1')  # 페이지
+    kw = req.GET.get('kw','') # 검색어
+    #조회
+    company_list = comp.order_by('code')
+    if kw:
+        company_list = company_list.filter(
+            Q(code__icontains=kw) |
+            Q(company__icontains=kw)
+        ).distinct()
+
+    #페이징처리
+    paginator = Paginator(company_list, 20)
+    page_obj = paginator.get_page(page)
+    context = {'comp':page_obj, 'page':page, 'kw' : kw}
+    return render(req, 'company.html', context)
