@@ -11,9 +11,12 @@
     <title>tribe</title>
 </head>
 <body>
-
+<div class="container">
     <div class="row">
-        {% for wine in wines %}
+
+    </div>
+    <div class="row">
+        {% for wine in comps1 %}
         {% if wine %}
         <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
@@ -22,7 +25,7 @@
                     <h4 class="card-title">
                         <a href="#">{{ wine.category_name }}</a>
                     </h4>
-                    <h5>${{ wine.category_name }} </h5>
+                    <h5>${{ wine.ticker2 }} </h5>
                     <p class="card-text">{{ wine.category_ticker }} </p>
                 </div>
                 <div class="card-footer container">
@@ -42,5 +45,7 @@
         </div>
         {% endif %}
         {% endfor %}
+    </div>
+</div>
 </body>
 </html>

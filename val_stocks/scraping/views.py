@@ -175,15 +175,13 @@ def tribeofstocks(req):
     return render(req, 'b.html')
 
 def tribe(req):
-    alotofwine= Category.objects.all()
-    context = {'wines' : alotofwine }
+    alotofcateg= Category.objects.all()
+    context = {'comps1' : alotofcateg }
     # Django 템플릿에 사용할 파라미터 값을 변수로 선언 > 사용해야할 인자값이 많아질 때 편리하다.
     # board = get_object_or_404(Board, id=pk)
     # Board는 필자가 Model에서 설정한 DB 이름
-    context['wine'] = alotofwine
-    return render(req, 'tribe.html')
 
-
+    return render(req, 'tribe.html',context)
 
 def com(req):
     comp = Company.objects.all()
