@@ -27,3 +27,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+
+#매일거래량
+class Daily(models.Model):
+    ticker3 = models.TextField()
+    result = models.TextField()
+    def __str__(self):
+        return self.ticker3

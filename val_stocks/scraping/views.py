@@ -2,11 +2,13 @@ from django.shortcuts import render
 from bs4 import BeautifulSoup
 import requests
 import json
-from .models import Company, Category, Quarter
+from .models import Company, Category, Quarter, Daily
 from pykrx import stock
 from .models import Company, Quarter #data
 import pandas as pd
 import time
+from datetime import datetime
+from django.utils.dateformat import DateFormat
 
 def popular(req) :
     # naver finance 인기 검색 종목
@@ -118,20 +120,20 @@ def kospi_list(req):
 #     print(len(aa1),aa1)
 #     time.sleep(1)
 # 코스닥
-    print("되냐")
-    tickers1 = stock.get_market_ticker_list("20211208", market="KOSDAQ")
-    print(tickers1)
-    for ticker in tickers1:
-        time.sleep(0.3)
-        df2 = stock.get_market_cap("20211208", "20211208", ticker)
-        time.sleep(0.3)
-        df3 = pd.DataFrame(df2)
-        df4 = df3["시가총액"].tolist()
-        name2 = stock.get_market_ticker_name(ticker)
-        time.sleep(0.3)
-        new_company = Company( ticker = ticker, company_name = name2, market = "d", stock_price = df4[0]  )
-        print(new_company)
-        new_company.save()
+#     print("되냐")
+#     tickers1 = stock.get_market_ticker_list("20211208", market="KOSDAQ")
+#     print(tickers1)
+#     for ticker in tickers1:
+#         time.sleep(0.3)
+#         df2 = stock.get_market_cap("20211208", "20211208", ticker)
+#         time.sleep(0.3)
+#         df3 = pd.DataFrame(df2)
+#         df4 = df3["시가총액"].tolist()
+#         name2 = stock.get_market_ticker_name(ticker)
+#         time.sleep(0.3)
+#         new_company = Company( ticker = ticker, company_name = name2, market = "d", stock_price = df4[0]  )
+#         print(new_company)
+#         new_company.save()
 
 #     company1 = Company.objects.all()
 #     company1.delete()
@@ -169,6 +171,25 @@ def kospi_list(req):
 #
 #         print(new_company3)
 #         new_company3.save()
+
+
+
+# 회사별 하루 거래 시가 종가 data
+#     today = DateFormat(datetime.now()).format('Ymd')
+#     yesterday = str(int(today) - 2)
+#     print(today)
+#     df = stock.get_market_ohlcv(yesterday, today, "005930")
+#     print(df.head(3))
+#
+#     time.sleep(2)
+#     new_company4 = Daily( ticker3 = "005930", result = df)
+#     time.sleep(2)
+#
+#     print(new_company4)
+#     new_company4.save()
+    comp_price = Daily.objects.all()
+    print(comp_price)
+
 
     return render(req, 'news.html' )
 

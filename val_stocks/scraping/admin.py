@@ -7,7 +7,7 @@ from django.contrib import admin
 # # Register your models here.
 # admin.site.register(Wine)
 # admin.site.register(manwine)
-from .models import Company, Category, Quarter
+from .models import Company, Category, Quarter, Daily
 # Register your models here.
 class CompanyAdmin(admin.ModelAdmin):
     search_fields = ['company']
@@ -23,3 +23,8 @@ class CompanyAdmin2(admin.ModelAdmin):
     search_fields = ['Quarter']
 # research function
 admin.site.register(Quarter,CompanyAdmin2)
+
+class CompanyAdmin3(admin.ModelAdmin):
+    search_fields = ['Daily']
+# research function
+admin.site.register(Daily,CompanyAdmin3)
