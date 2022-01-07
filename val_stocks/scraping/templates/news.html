@@ -1,22 +1,21 @@
 <html>
 <!-- django의 HTML 코드 -->
-<ul>
-    <!-- edit. 리스트 두개를 한번에 받아서 출력 -->
-    {%for home in newsall %}
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col-3 p-3"><a href="{{ home.link }}"><img src="{{ home.image_s }}"></img></a></div>
-                <div class="col-9 p-3" style="font-size:14px;">
-                    <div class="text-secondary" style="font-size:12px;">{{ home.writing }} · 경제 메인</div>
-                    <a href="{{ home.link }}"><b>{{home.title}}</b></a><br>
-                    <div class="mt-2" style="font-size: 12px">{{ home.content }}</div>
+    <ul>
+        <!-- edit. 리스트 두개를 한번에 받아서 출력 -->
+        {%for home in newsall %}
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-3 p-3"><a href="{{ home.link }}"><img src="{{ home.image_s }}"></img></a></div>
+                    <div class="col-9 p-3" style="font-size:14px;">
+                        <div class="text-secondary" style="font-size:12px;">{{ home.writing }} · 경제 메인</div>
+                        <a href="{{ home.link }}"><b>{{home.title}}</b></a><br>
+                        <div class="mt-2" style="font-size: 12px">{{ home.content }}</div>
+                    </div>
                 </div>
-            </div>
-        </td>
-    </tr>
-    {%endfor%}
-    <!-- -->
-
-</ul>
+            </td>
+        </tr>
+        {%endfor%}
+        <!-- -->
+    </ul>
 </html>

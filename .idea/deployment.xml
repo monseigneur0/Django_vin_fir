@@ -5,7 +5,7 @@
       <paths name="djanchat">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/ubuntu/djangochat/Django_vin_fir" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/ubuntu/Django_vin_fir" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

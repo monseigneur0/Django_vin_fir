@@ -118,18 +118,20 @@ def kospi_list(req):
 #     print(len(aa1),aa1)
 #     time.sleep(1)
 # 코스닥
-#     tickers1 = stock.get_market_ticker_list("20211208", market="KOSDAQ")
-#     for ticker in tickers1:
-#         time.sleep(0.3)
-#         df2 = stock.get_market_cap("20211208", "20211208", ticker)
-#         time.sleep(0.3)
-#         df3 = pd.DataFrame(df2)
-#         df4 = df3["시가총액"].tolist()
-#         name2 = stock.get_market_ticker_name(ticker)
-#         time.sleep(0.3)
-#         new_company = Company( ticker = ticker, company_name = name2, market = "d", stock_price = df4[0]  )
-#         print(new_company)
-#         new_company.save()
+    print("되냐")
+    tickers1 = stock.get_market_ticker_list("20211208", market="KOSDAQ")
+    print(tickers1)
+    for ticker in tickers1:
+        time.sleep(0.3)
+        df2 = stock.get_market_cap("20211208", "20211208", ticker)
+        time.sleep(0.3)
+        df3 = pd.DataFrame(df2)
+        df4 = df3["시가총액"].tolist()
+        name2 = stock.get_market_ticker_name(ticker)
+        time.sleep(0.3)
+        new_company = Company( ticker = ticker, company_name = name2, market = "d", stock_price = df4[0]  )
+        print(new_company)
+        new_company.save()
 
 #     company1 = Company.objects.all()
 #     company1.delete()
@@ -200,3 +202,4 @@ def com(req):
     page_obj = paginator.get_page(page)
     context = {'comp':page_obj, 'page':page, 'kw' : kw}
     return render(req, 'company.html', context)
+
