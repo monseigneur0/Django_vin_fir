@@ -9,6 +9,8 @@ import pandas as pd
 import time
 from datetime import datetime
 from django.utils.dateformat import DateFormat
+from IPython.display import display
+
 
 def popular(req) :
     # naver finance 인기 검색 종목
@@ -172,12 +174,10 @@ def kospi_list(req):
 #         print(new_company3)
 #         new_company3.save()
 
-
-
+    today = DateFormat(datetime.now()).format('Ymd')
+    yesterday = str(int(today) - 2)
+    print(today)
 # 회사별 하루 거래 시가 종가 data
-#     today = DateFormat(datetime.now()).format('Ymd')
-#     yesterday = str(int(today) - 2)
-#     print(today)
 #     df = stock.get_market_ohlcv(yesterday, today, "005930")
 #     print(df.head(3))
 #
@@ -187,8 +187,56 @@ def kospi_list(req):
 #
 #     print(new_company4)
 #     new_company4.save()
-    comp_price = Daily.objects.all()
-    print(comp_price)
+#     comp_price = Daily.objects.all()
+#     print(comp_price)
+#     print(comp_price.values())
+
+# 각각 시가총액 데이터 저장
+#     cap = stock.get_market_cap(yesterday, today, "005930")
+#     print(cap.head())
+#     c_namea = Company.objects.all()
+#     print("모든회사")
+#     for i in c_namea :
+#         print(i)
+#         print(i.ticker)
+#         its = str(i.ticker)
+#         print(its)
+#         i.stock_cap = stock.get_market_cap(yesterday, today, its )
+#         print(i.stock_cap)
+#         i.save()
+#         time.sleep(0.1)
+    c_name = Company.objects.get(ticker =  "005930")
+    print(c_name)
+    print(c_name.ticker)
+    print(c_name.stock_cap)
+    print(c_name)
+    df = pd.DataFrame({"A":[1,4,7], "B":[2,5,8], "C":[3,6,9]})
+
+    # Use `iloc[]` to select a row
+    display(df)
+    display(df.iloc[0])
+    display(df.loc[0])
+
+    # Use `loc[]` to select a column
+    display(df.loc[:,'A'])
+    display(df['A'])
+
+    # 특정 row, column을 선택하기
+    display(df.loc[0]['B'])
+
+
+
+
+
+#     c_name.stock_cap = stock.get_market_cap(yesterday, today,  "005930")
+#     c_name.save()
+    expy1 = stock.get_market_cap(yesterday, today,  "005930")
+    print(type(expy1))
+#     print(expy1)
+#     print(expy1["시가총액"])
+#     print(expy1.shape)
+#     c_name = Company.objects.get(ticker =  "005930")
+#     print(c_name)
 
 
     return render(req, 'news.html' )

@@ -5,6 +5,7 @@ class Company(models.Model):
     ticker = models.CharField(max_length=20)
     company_name = models.CharField(max_length=40, null=False)
     stock_price = models.IntegerField(verbose_name='주식 가격', null=True)
+    stock_cap = models.TextField(verbose_name='시가 총액', null=True)
     MARKETS = (('p','Kospi'), ('d', 'Kosdaq'), ('n', 'Nasdaq'))
     market = models.CharField(max_length=1, verbose_name='마켓', choices=MARKETS)
     def __str__(self):
