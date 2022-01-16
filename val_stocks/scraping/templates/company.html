@@ -144,12 +144,7 @@
     </ul>
     <!-- 페이징처리 끝 -->
 
-    <!-- edit -->
-    <form id="searchForm" method="get" action="{% url 'company' %}">
-        <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
-        <input type="hidden" id="page" name="page" value="{{ page }}">
-    </form>
-    <!-- -->
+
     {% block script %}
     <script type='text/javascript'>
         $(document).ready(function(){

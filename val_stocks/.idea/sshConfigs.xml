@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="15.165.77.159" id="ea16af99-e10d-4dc7-9502-59b27906d791" keyPath="$USER_HOME$/Downloads/ssactac.pem" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" />
+    </configs>
+  </component>
+</project>

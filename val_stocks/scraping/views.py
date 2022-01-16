@@ -255,20 +255,6 @@ def tribe(req):
     return render(req, 'tribe.html',context)
 
 def com(req):
-    comp = Company.objects.all()
-    page = req.GET.get('page', '1')  # 페이지
-    kw = req.GET.get('kw','') # 검색어
-    #조회
-    company_list = comp.order_by('code')
-    if kw:
-        company_list = company_list.filter(
-            Q(code__icontains=kw) |
-            Q(company__icontains=kw)
-        ).distinct()
 
-    #페이징처리
-    paginator = Paginator(company_list, 20)
-    page_obj = paginator.get_page(page)
-    context = {'comp':page_obj, 'page':page, 'kw' : kw}
-    return render(req, 'company.html', context)
+    return render(req, 'company.html')
 
