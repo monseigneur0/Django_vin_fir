@@ -4,13 +4,22 @@ import requests
 import json
 from .models import Company, Category, Quarter, Daily
 from pykrx import stock
-from .models import Company, Quarter #data
 import pandas as pd
 import time
 from datetime import datetime
 from django.utils.dateformat import DateFormat
 from IPython.display import display
 
+from rest_framework import generics
+from .serializers import PostSerializer
+
+class ListPost(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = PostSerializer
+
+class DetailPost(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = PostSerializer
 
 def popular(req) :
     # naver finance 인기 검색 종목
@@ -158,7 +167,7 @@ def kospi_list(req):
 # 키ㅏ테고리
 #     for ef1 in range(4):
 #         ak = 1024 + ef1
-
+#
 #     for ef1 in range(23):
 #         ak = 1005 + ef1
 #         print(ak)
@@ -173,10 +182,10 @@ def kospi_list(req):
 #
 #         print(new_company3)
 #         new_company3.save()
-
-    today = DateFormat(datetime.now()).format('Ymd')
-    yesterday = str(int(today) - 2)
-    print(today)
+#
+#     today = DateFormat(datetime.now()).format('Ymd')
+#     yesterday = str(int(today) - 2)
+#     print(today)
 # 회사별 하루 거래 시가 종가 data
 #     df = stock.get_market_ohlcv(yesterday, today, "005930")
 #     print(df.head(3))
@@ -205,24 +214,24 @@ def kospi_list(req):
 #         print(i.stock_cap)
 #         i.save()
 #         time.sleep(0.1)
-    c_name = Company.objects.get(ticker =  "005930")
-    print(c_name)
-    print(c_name.ticker)
-    print(c_name.stock_cap)
-    print(c_name)
-    df = pd.DataFrame({"A":[1,4,7], "B":[2,5,8], "C":[3,6,9]})
-
-    # Use `iloc[]` to select a row
-    display(df)
-    display(df.iloc[0])
-    display(df.loc[0])
-
-    # Use `loc[]` to select a column
-    display(df.loc[:,'A'])
-    display(df['A'])
-
-    # 특정 row, column을 선택하기
-    display(df.loc[0]['B'])
+#     c_name = Company.objects.get(ticker =  "005930")
+#     print(c_name)
+#     print(c_name.ticker)
+#     print(c_name.stock_cap)
+#     print(c_name)
+#     df = pd.DataFrame({"A":[1,4,7], "B":[2,5,8], "C":[3,6,9]})
+#
+#     # Use `iloc[]` to select a row
+#     display(df)
+#     display(df.iloc[0])
+#     display(df.loc[0])
+#
+#     # Use `loc[]` to select a column
+#     display(df.loc[:,'A'])
+#     display(df['A'])
+#
+#     # 특정 row, column을 선택하기
+#     display(df.loc[0]['B'])
 
 
 
@@ -230,8 +239,8 @@ def kospi_list(req):
 
 #     c_name.stock_cap = stock.get_market_cap(yesterday, today,  "005930")
 #     c_name.save()
-    expy1 = stock.get_market_cap(yesterday, today,  "005930")
-    print(type(expy1))
+#     expy1 = stock.get_market_cap(yesterday, today,  "005930")
+#     print(type(expy1))
 #     print(expy1)
 #     print(expy1["시가총액"])
 #     print(expy1.shape)

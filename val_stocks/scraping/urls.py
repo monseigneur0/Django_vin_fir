@@ -12,5 +12,7 @@ urlpatterns = [
       path( "trib", views.tribeofstocks ),
       path( "com", views.com ),
       path( "tribe", views.tribe ),
+      path('<int:pk>/', views.DetailPost.as_view()),
+      path('', views.ListPost.as_view()),
 
       ]
